@@ -24,6 +24,7 @@ const particlesOptions = {
 const initialState = {
   input: '',
   imageUrl: '',
+  dates: '',
   box: {},
   route: 'signin',
   isSignedIn: false,
@@ -75,7 +76,7 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-      fetch('http://localhost:5555/imageurl', {
+      fetch('https://pacific-scrubland-58086.herokuapp.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -85,7 +86,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('http://localhost:5555/image', {
+          fetch('https://pacific-scrubland-58086.herokuapp.com/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -123,7 +124,9 @@ class App extends Component {
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         { route === 'home'
           ? <div>
-              <Logo />
+              <Logo 
+                dates={this.state.dates}
+              />
               <Rank
                 name={this.state.user.name}
                 entries={this.state.user.entries}
@@ -135,10 +138,10 @@ class App extends Component {
               <FaceRecognition box={box} imageUrl={imageUrl} />
             </div>
           : (
-             route === 'signin'
-             ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-             : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-            )
+           route === 'signin'
+           ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+           : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+          )
         }
       </div>
     );
