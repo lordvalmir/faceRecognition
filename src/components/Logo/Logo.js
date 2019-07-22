@@ -1,22 +1,9 @@
 import React from 'react';
 import Tilt from 'react-tilt';
 import Atom_Logo from './atom.png';
-// import Calendar from 'react-calendar';
 import './Logo.css';
 
 class Logo extends React.Component {
-
-  state = {
-    date: new Date(),
-  }
- 
-  onChange = date => this.setState({ date })
-
-  getDate = (date) => {
-  	console.log(date[0])
-		console.log(date[1])
-  }
-
   render() {
     return (
 	    <div className='ma5 mt0'>
@@ -24,14 +11,6 @@ class Logo extends React.Component {
 				 <div className="Tilt-inner pa3" > <img style={{paddingTop: '2px'}} alt='logo' src={Atom_Logo}/></div>
 				</Tilt> 
       </div>
-    	 // 	 <Calendar 
-       //    onChange={this.onChange}
-       //    selectRange
-       //    value={this.state.date}
-       //    onClick={
-       //    	console.log(this.getDate(this.state.date))
-       //    }
-       //  />
     );
   }
 }

@@ -24,7 +24,6 @@ const particlesOptions = {
 const initialState = {
   input: '',
   imageUrl: '',
-  dates: '',
   box: {},
   route: 'signin',
   isSignedIn: false,
@@ -124,9 +123,7 @@ class App extends Component {
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         { route === 'home'
           ? <div>
-              <Logo 
-                dates={this.state.dates}
-              />
+              <Logo />
               <Rank
                 name={this.state.user.name}
                 entries={this.state.user.entries}
