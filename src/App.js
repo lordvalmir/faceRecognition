@@ -122,9 +122,9 @@ class App extends Component {
           params={particlesOptions}
         />
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-        { route === 'home'
-          ? <div>
-              <Logo />
+        { if (route === 'home') {
+            <div>
+              <Logo/>
               <Rank
                 name={this.state.user.name}
                 entries={this.state.user.entries}
@@ -135,11 +135,11 @@ class App extends Component {
               />
               <FaceRecognition box={box} imageUrl={imageUrl} />
             </div>
-          : (
-           route === 'signin'
-           ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-           : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-          )
+          } else if (route === 'signin') {
+            <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+          } else {
+            <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+          }
         }
       </div>
     );
