@@ -24,7 +24,7 @@ const particlesOptions = {
 const initialState = {
   input: '',
   imageUrl: '',
-  box: {},
+  regions: [],
   route: 'signin',
   isSignedIn: false,
   user: {
@@ -52,23 +52,6 @@ class App extends Component {
         joined: data.joined
       }
     })  
-  }
-
-  calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-    const image = document.getElementById('inputimage');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height)
-    }
-  }
-
-  displayFaceBox = (box) => {
-    this.setState({box: box});
   }
 
   onInputChange = (event) => {
@@ -100,7 +83,12 @@ class App extends Component {
         })
         .catch(console.log)
       }
-      this.displayFaceBox(this.calculateFaceLocation(response))
+
+      const { regions } = response.outputs[0].data;
+
+      this.setState (() => ({
+          regions,
+      }))
     })
     .catch(err => console.log(err));
   }
@@ -115,7 +103,7 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn, imageUrl, route, box } = this.state;
+    const { isSignedIn, route, regions, imageUrl} = this.state;
     return (
       <div className="App">
         <Particles className='particles' params={particlesOptions}/>
@@ -125,7 +113,7 @@ class App extends Component {
               <Logo name={this.state.user.name}/>
               <Rank name={this.state.user.name} entries={this.state.user.entries}/>
               <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
-              <FaceRecognition box={box} imageUrl={imageUrl} />
+              <FaceRecognition regions={regions} imageUrl={imageUrl} />
             </div>
           : (
            route === 'signin'
@@ -137,5 +125,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;
