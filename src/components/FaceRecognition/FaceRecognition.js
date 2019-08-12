@@ -4,13 +4,9 @@ import './FaceRecognition.css';
 const FaceRecognition = ({ regions, imageUrl }) => {
 	const calculateFaceLocation = (region) => {
     const clarifaiFace = region.region_info.bounding_box;
-    console.log(clarifaiFace);
     const image = document.getElementById('inputimage');
-    console.log(image);
     const width = Number(image.width);
     const height = Number(image.height);
-    console.log(width);
-    console.log(height);
     return {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
@@ -18,8 +14,6 @@ const FaceRecognition = ({ regions, imageUrl }) => {
       bottomRow: height - (clarifaiFace.bottom_row * height)
     }
   }
-
-  console.log("regions", regions)
 
 	return (
 		<div className='center ma'>

@@ -69,7 +69,7 @@ class App extends Component {
     }) 
     .then(response => response.json())
     .then(response => {
-      if (response) {
+      if (response !== 'unable to work with API') {
         fetch('https://pacific-scrubland-58086.herokuapp.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
@@ -83,9 +83,7 @@ class App extends Component {
         })
         .catch(console.log)
       }
-
       const { regions } = response.outputs[0].data;
-
       this.setState (() => ({
           regions,
       }))
